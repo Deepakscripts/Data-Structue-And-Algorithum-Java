@@ -226,6 +226,20 @@ public class Linkedlist {
     previous.next = previous.next.next;
     return;
   }
+/* FINDING MIDDLE OF A LL */
+  public Node findMiddle(Node head){
+    Node slow = head;
+    Node fast = head;
+
+    while (fast != null/* EVEN CASES*/ && fast.next != null/* ODD CASES*/) {
+      //+1 Turtle
+      slow = slow.next;
+      //+2 Hare
+      fast = fast.next.next;
+    }
+    //slow is my middle
+    return slow;
+  }
 
   public static void main(String[] args) {
     Linkedlist ll = new Linkedlist();
