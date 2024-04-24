@@ -207,7 +207,7 @@ public class Linkedlist {
       temp = temp.next;
       size++;
     }
-    // head ko delete kar denge
+    // head ko delete kar denge if n == size piche se hai kuki
     if (n == size) {
       // head ka aage jo bhi tha usko aab head bana diya
       head = head.next;
@@ -222,38 +222,70 @@ public class Linkedlist {
       previous = previous.next;
       i++;
     }
-    //linking size -n and size - n +2 position and jo beech mai hai vo apne aap GArbage collector delete kar dega
+    // linking size -n and size - n +2 position and jo beech mai hai vo apne aap
+    // Garbage collector delete kar dega
     previous.next = previous.next.next;
     return;
   }
-/* FINDING MIDDLE OF A LL */
-  public Node findMiddle(Node head){
+
+  /* FINDING MIDDLE OF A LL */
+  // slow fast approach
+  public Node findMiddle(Node head) {
     Node slow = head;
     Node fast = head;
 
-    while (fast != null/* EVEN CASES*/ && fast.next != null/* ODD CASES*/) {
-      //+1 Turtle
+    while (fast != null/* EVEN CASES */ && fast.next != null/* ODD CASES */) {
+      // +1 Turtle
       slow = slow.next;
-      //+2 Hare
+      // +2 Hare
       fast = fast.next.next;
     }
-    //slow is my middle
+    // slow is my middle
     return slow;
+  }
+
+  /* CHECK PALLINDROME */
+  public boolean checkPallindrome() {
+    // base case
+    if (head == null || head.next == null) {
+      return true;
+    }
+    // step 1 Find mid
+    Node midNode = findMiddle(head);
+    // step 2 reverse 2nd half
+    Node previous = null;
+    Node current = midNode;
+    Node next;
+    while (current != null) {
+      next = current.next;
+      current.next = previous;
+      previous = current;
+      current = next;
+    }
+    Node right = previous;// 2nd half ka head kuki current null ho gaya and previous last mai aa gaya
+    Node left = head;
+    // step 3 check left and right half
+    while ((right != null)) {
+      if (left.data != right.data) {
+        return false;
+      }
+      left = left.next;
+      right = right.next;
+    }
+    return true;
   }
 
   public static void main(String[] args) {
     Linkedlist ll = new Linkedlist();
     ll.addAtFirst(1);
     ll.addAtFirst(2);
-    ll.addAtLast(11);
-    ll.addAtLast(12);
-    ll.addAtLast(13);
-    ll.addAtLast(14);
-    ll.addAtLast(15);
+    ll.addAtFirst(2);
+    ll.addAtFirst(1);
+    
     ll.print();
-    ll.addInBetween(2, 100);
-    ll.deleteNthFromEnd(2);
-    ll.print();
+    /* ll.addInBetween(2, 100); */
+    /* ll.deleteNthFromEnd(2); */
+    System.out.println(ll.checkPallindrome());
 
     /*
      * System.out.println(ll.size);
@@ -265,8 +297,10 @@ public class Linkedlist {
      * System.out.println(ll.removeLast());
      */
     /* System.out.println(ll.itrSearch(11)); */
-   /*  System.out.println(ll.recursiveSearch(11));
-    System.out.println(ll.recursiveSearch(19)); */
+    /*
+     * System.out.println(ll.recursiveSearch(11));
+     * System.out.println(ll.recursiveSearch(19));
+     */
 
     /* ll.reverse(); */
     /* ll.print(); */
