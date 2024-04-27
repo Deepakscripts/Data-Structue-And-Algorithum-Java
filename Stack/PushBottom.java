@@ -3,10 +3,12 @@ import java.util.*;
 public class PushBottom {
     public static void pushAtBottom(Stack<Integer> s, int data) {
         if (s.isEmpty()) {
+            //last mai 4 push hoga fir return
             s.push(data);
             return;
         }
         int top = s.pop();
+        //recursion
         pushAtBottom(s, data);
         s.push(top);
     }
