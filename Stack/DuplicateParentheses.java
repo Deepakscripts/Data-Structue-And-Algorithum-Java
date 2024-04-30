@@ -3,33 +3,35 @@ import java.util.*;
 public class DuplicateParentheses {
     public static boolean hasDuplicate(String str) {
         Stack<Character> stack = new Stack<>();
-        int openCount = 0;
-        
+
         for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
-            // opening
-            if (ch == '(') {
-                stack.push(ch);
-                openCount++;
-            }
-            // closing
-            else if (ch == ')') {
-                if (stack.isEmpty() || stack.peek() != '(') {
-                    // Closing parenthesis without matching opening parenthesis
-                    return true;
+
+            // closing ke liye check
+            if (ch == ')') {
+                int count = 0;
+                while (stack.peek() != '(') {
+                    stack.pop();
+                    count++;
                 }
-                stack.pop();
-                openCount--;
+                if (count < 1) {
+                    return true;// duplicate
+                } else {
+                    stack.pop();// ( ko dhud liya tha tu delete bhi karna pdega.
+                }
+            } else {
+                // dubara agge ke string ke liye
+                stack.push(ch);
             }
+
         }
-        
-        // If there are any opening parentheses left without a matching closing one, it indicates duplicates
-        return openCount > 0;
+        return false;
+
     }
 
     public static void main(String[] args) {
-        String str = "((a+b)) + (c+d))";
-        
+        String str = "((a+b) + (c+d))";
+
         if (hasDuplicate(str)) {
             System.out.println("String contains duplicate parentheses.");
         } else {
@@ -37,3 +39,4 @@ public class DuplicateParentheses {
         }
     }
 }
+/* CONDITION YE HAI KI VALID HONI CHIYE PARRENTHESIS KO AGAR OPENING HAI TU CLOSING BHI HOGA */
